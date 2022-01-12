@@ -16,6 +16,7 @@ Compiler        :   Apple clang version 13.0.0 (clang-1300.0.29.30)
 #include "GaltonBoard.h"
 
 using namespace std;
+//salute
 
 int main() {
 
