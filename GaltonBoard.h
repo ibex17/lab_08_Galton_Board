@@ -48,9 +48,19 @@ void emptyBuffer();
  */
 std::ostream &operator<<(std::ostream &os, const vect &v);
 
-
+/**
+ *
+ * @param boardLevel
+ * @return
+ */
 int rightFallCounter(int boardLevel);
 
+/**
+ *
+ * @param boardLevel
+ * @param numberOfBalls
+ * @return
+ */
 std::vector<int> gaussianArray(int boardLevel,int numberOfBalls );
 
 #endif //LAB_08_GALTON_BOARD_GALTONBOARD_H

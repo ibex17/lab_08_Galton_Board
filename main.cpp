@@ -16,7 +16,6 @@ Compiler        :   Apple clang version 13.0.0 (clang-1300.0.29.30)
 #include "GaltonBoard.h"
 
 using namespace std;
-//salute
 
 int main() {
 
@@ -24,15 +23,15 @@ int main() {
     //  Constants
     //-------------------------------------------------------------------------------------------
 
-    const string MSG_WELCOME             = "Ce programme permet de ...";
-    const string MSG_INVITE_BOARD_LEVEL = "Hauteur";
-    const string MSG_INVITE_NBR_BALLS = "Nombre de billes";
-    const string MSG_BROKEN_STREAM       = "Erreur de saisie, veuillez recommencer";
-    const string MSG_EXIT                = "Presser ENTER pour QUITTER";
+    const string MSG_WELCOME                = "Ce programme permet de ...";
+    const string MSG_INVITE_BOARD_LEVEL     = "Hauteur";
+    const string MSG_INVITE_NBR_BALLS       = "Nombre de billes";
+    const string MSG_BROKEN_STREAM          = "Erreur de saisie, veuillez recommencer";
+    const string MSG_EXIT                   = "Presser ENTER pour QUITTER";
 
-    const unsigned MIN_VALUE_ARRAY_LENGTH = 1;
-    const unsigned MAX_VALUE_BOARD_LEVEL  = 100;
-    const unsigned MAX_VALUE_NBR_BALLS  = 1000;
+    const unsigned MIN_VALUE_ARRAY_LENGTH   = 1;
+    const unsigned MAX_VALUE_BOARD_LEVEL    = 100;
+    const unsigned MAX_VALUE_NBR_BALLS      = 1000;
 
     //-------------------------------------------------------------------------------------------
     //  Welcome message
@@ -66,6 +65,8 @@ int main() {
 
     vector<int> gaussArray = gaussianArray(boardLevel,numberOfBalls);
 
+
+    //TODO effacer ce commentaire
     /*
     // Initialise a vector of size boardLevel and filled with 0
     vector<int> gaussianArray(boardLevel);
@@ -97,6 +98,7 @@ int main() {
     cout << "Gaussian Array :" << endl << gaussArray << endl;
 
 
+    //TODO faire la fonction pour afficher correctement sur la console
     for (auto i = gaussArray.begin(); i != gaussArray.end(); ++i) {
         for (int j = 0; j < *i; ++j) {
             cout << "*";
@@ -104,6 +106,12 @@ int main() {
         cout << endl;
     }
 
+    //-------------------------------------------------------------------------------------------
+    //  Program's end
+    //-------------------------------------------------------------------------------------------
+
+    cout << endl << MSG_EXIT;
+    emptyBuffer();
 
     return EXIT_SUCCESS;
 }
