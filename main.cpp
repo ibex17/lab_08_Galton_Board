@@ -99,11 +99,21 @@ int main() {
 
 
     //TODO faire la fonction pour afficher correctement sur la console
+    /* ancienne boucle, fonctionne
     for (auto i = gaussArray.begin(); i != gaussArray.end(); ++i) {
         for (int j = 0; j < *i; ++j) {
             cout << "*";
         }
         cout << endl;
+    }*/
+    int makeshiftt = 50; //valeur arbitraire placeholder. devra corespondre au nombre
+                         //max de colonne
+
+    for (auto i = 0; i<=makeshiftt; ++i){
+       for (auto i = gaussArray.begin(); i != gaussArray.end(); ++i) {
+          if(/*cas!= vide?cout << "*";:rien""*/)
+             cout << "*";
+       }
     }
 
     //-------------------------------------------------------------------------------------------
