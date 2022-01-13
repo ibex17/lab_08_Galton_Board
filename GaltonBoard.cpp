@@ -1,70 +1,30 @@
-/*
--------------------------------------------------------------------------------------------------
-File name       :   GaltonBoard.cpp
-Laboratory name :
-Author(s)       :   Richard SIERRA
-Creation date   :   11.01.22
-Description     :   <What does this program do ?>
-Remarks         :   <Is there a bug or something ?>
-Compiler        :   Apple clang version 13.0.0 (clang-1300.0.29.30)
--------------------------------------------------------------------------------------------------
-*/
+//
+// Created by Richard Sierra on 13.01.22.
+//
 
 #include <iostream>
 #include <random>
-
 #include "GaltonBoard.h"
 
 using namespace std;
-using vect = vector<int>;
 
-void emptyBuffer() {
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+GaltonBoard::GaltonBoard(size_t boardLevel, size_t numberOfBalls) {
+    this->boardLevel    = boardLevel;
+    this->numberOfBalls = numberOfBalls;
 }
 
-ostream &operator<<(ostream &os, const vect &v) {
-    cout << "(";
-    for (auto i = v.begin(); i != v.end(); ++i) {
-        cout << *i;
-        if (next(i) != v.end()) {
-            cout << ", ";
-        }
-    }
-    cout << ")";
-
-    return os;
+void GaltonBoard::setBoardLevel(size_t level) {
+    boardLevel = level;
 }
 
-int readIntBetween(
-        const string &message,
-        int minVal,
-        int maxVal,
-        const string &errorMessage
-) {
-    int  input;
-    bool error;
-
-    do {
-        cout << message << " [" << minVal << ".." << maxVal << "] : ";
-
-        if (cin >> input)
-            error = false;
-        else {
-            cin.clear();
-            error = true;
-        }
-
-        if(input < minVal || input > maxVal || error)
-            cout << errorMessage << endl;
-
-        emptyBuffer();
-
-    } while (input < minVal || input > maxVal || error);
-
-    return input;
+void GaltonBoard::setNumberOfBalls(size_t balls) {
+    numberOfBalls = balls;
 }
 
-int randDistrib_LR() {
+//_________________
+
+
+size_t GaltonBoard::randDistrib_LR() {
     random_device              rd;  //Will be used to obtain a seed for the random number engine
     mt19937                    gen(rd()); //Standard mersenne_twister_engine seeded with rd()
     uniform_int_distribution<> distrib(0, 1);
@@ -72,24 +32,37 @@ int randDistrib_LR() {
     return distrib(gen);
 }
 
-int rightFallCounter(int boardLevel) {
+size_t GaltonBoard::rightFallCounter() {
     // Counts every time the ball falls to the right side
-    int result = 0;
+    size_t result = 0;
 
-    // The boardLevel is the number of layers of decisions that the ball traverse,
-    for (int i = 0; i < boardLevel; ++i) {
+    // The level is the number of layers of decisions that the ball traverse,
+    for (size_t i = 0; i < boardLevel; ++i) {
         result += randDistrib_LR(); // The ball either goes left(0) or right(1)
     }
     return result;
 }
 
-vector<int> gaussianArray(int boardLevel,int numberOfBalls ){
-    // Initialise a vector of size boardLevel and filled with 0
-    vector<int> gaussianArray(boardLevel);
+void GaltonBoard::createGaussianArray() {
+    // Initialise a vector of size level and filled with 0
+    vector<size_t> gaussianArray(boardLevel);
 
-    for (int i = 0; i < numberOfBalls; ++i) {
+    for (size_t i = 0; i < numberOfBalls; ++i) {
         // The total number of rights it made is the index of where it lands
-        gaussianArray.at(rightFallCounter(boardLevel)) += 1;    // So we add one ball
+        gaussianArray.at(rightFallCounter()) += 1;    // So we add one ball
     }
-    return gaussianArray;
+    gaussArray = gaussianArray;
+}
+
+void GaltonBoard::displayBoard() {
+    for (auto i = gaussArray.begin(); i != gaussArray.end(); ++i) {
+        for (size_t j = 0; j < *i; ++j) {
+            cout << "*";
+        }
+        cout << endl;
+    }
+}
+
+void GaltonBoard::startSimulation() {
+    createGaussianArray();
 }
