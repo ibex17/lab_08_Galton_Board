@@ -4,16 +4,21 @@ File name       :   main.cpp
 Laboratory name :   Galton Board
 Author(s)       :   Richard SIERRA, Lucas LEISSING
 Creation date   :   11.01.22
-Description     :   <What does this program do ?>
-Remarks         :   <Is there a bug or something ?>
+Description     :   This program simulates a Galton Board.
+                    The user is asked to enter the board level (number of row of pegs)
+                    and the number of balls to throw.
+                    At the end of the program, a graphic representation is offered
+                    in the console.
+Comments        :   This simulation doesn't take in count the interaction between each ball
+                    as would be the case in a real Galton Board.
+                    This program computes the probabilities ball by ball
 Compiler        :   Apple clang version 13.0.0 (clang-1300.0.29.30)
 -------------------------------------------------------------------------------------------------
 */
 
-#include <cstdlib>
 #include <iostream>
 
-#include "Galton.h"
+#include "annex.h"
 #include "GaltonBoard.h"
 
 using namespace std;
@@ -27,8 +32,12 @@ int main() {
     const string MSG_WELCOME            = "Ce programme permet de ...";
     const string MSG_INVITE_BOARD_LEVEL = "Hauteur";
     const string MSG_INVITE_NBR_BALLS   = "Nombre de billes";
-    const string MSG_BROKEN_STREAM      = "Erreur de saisie, veuillez recommencer";
-    const string MSG_EXIT               = "Presser ENTER pour QUITTER";
+    const string MSG_BROKEN_STREAM      = "Erreur de saisie, veuillez recommencer votre saisie";
+    const string MSG_RESTART_QUESTION   = "Voulez-vous recommencer ? ";
+    const char   YES_VALUE_CHAR         = 'o';
+    const char   NO_VALUE_CHAR          = 'n';
+
+    const string MSG_EXIT = "Presser ENTER pour QUITTER";
 
     const unsigned MIN_VALUE_BOARD_LEVEL = 1;
     const unsigned MAX_VALUE_BOARD_LEVEL = 100;
@@ -40,41 +49,41 @@ int main() {
 
     cout << MSG_WELCOME << endl << endl;
 
-    //-------------------------------------------------------------------------------------------
-    //  User input
-    //-------------------------------------------------------------------------------------------
 
-    int boardLevel = readIntBetween(
-            MSG_INVITE_BOARD_LEVEL,
-            MIN_VALUE_BOARD_LEVEL,
-            MAX_VALUE_BOARD_LEVEL,
-            MSG_BROKEN_STREAM
-    );
+    do {
 
-    int numberOfBalls = readIntBetween(
-            MSG_INVITE_NBR_BALLS,
-            MIN_VALUE_BOARD_LEVEL,
-            MAX_VALUE_NBR_BALLS,
-            MSG_BROKEN_STREAM
-    );
+        //---------------------------------------------------------------------------------------
+        //  Galton simulation
+        //---------------------------------------------------------------------------------------
 
-    //-------------------------------------------------------------------------------------------
-    //  Algorithm
-    //-------------------------------------------------------------------------------------------
+        GaltonBoard galton(
+                readIntBetween(
+                        MSG_INVITE_BOARD_LEVEL,
+                        MIN_VALUE_BOARD_LEVEL,
+                        MAX_VALUE_BOARD_LEVEL,
+                        MSG_BROKEN_STREAM
+                ),
+                readIntBetween(
+                        MSG_INVITE_NBR_BALLS,
+                        MIN_VALUE_BOARD_LEVEL,
+                        MAX_VALUE_NBR_BALLS,
+                        MSG_BROKEN_STREAM
+                )
+        );
 
-    GaltonBoard galton(boardLevel, numberOfBalls);
+        //---------------------------------------------------------------------------------------
+        //  Start simulation
+        //---------------------------------------------------------------------------------------
 
-    galton.startSimulation();
+        galton.startSimulation();
 
-    //-------------------------------------------------------------------------------------------
-    //  Displaying the simulation of the galton board
-    //-------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------
+        //  Displaying the simulation
+        //---------------------------------------------------------------------------------------
 
-    cout << "\n\n\tResults\n"; //
-    cout << "-------------------------\n\n";
+        galton.displayBoard();
 
-    cout << "Gaussian Array :" << endl;
-    galton.displayBoard();
+    } while (restart(MSG_RESTART_QUESTION, MSG_BROKEN_STREAM, YES_VALUE_CHAR, NO_VALUE_CHAR));
 
     //-------------------------------------------------------------------------------------------
     //  Program's end

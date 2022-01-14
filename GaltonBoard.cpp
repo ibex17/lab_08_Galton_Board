@@ -1,30 +1,48 @@
-//
-// Created by Richard Sierra on 13.01.22.
-//
+/*
+-------------------------------------------------------------------------------------------------
+File name       :   GaltonBoard.cpp
+Author(s)       :   Richard SIERRA
+Creation date   :   11.01.22
+Description     :   Definition of the GaltonBoard class
+Comments        :   -
+Compiler        :   Apple clang version 13.0.0 (clang-1300.0.29.30)
+-------------------------------------------------------------------------------------------------
+*/
 
 #include <iostream>
 #include <random>
+
 #include "GaltonBoard.h"
 
 using namespace std;
+
+//-----------------------------------------------------------------------------------------------
+//  Constructor
+//-----------------------------------------------------------------------------------------------
 
 GaltonBoard::GaltonBoard(size_t boardLevel, size_t numberOfBalls) {
     this->boardLevel    = boardLevel;
     this->numberOfBalls = numberOfBalls;
 }
 
+//-----------------------------------------------------------------------------------------------
+//  Setters
+//-----------------------------------------------------------------------------------------------
+
 void GaltonBoard::setBoardLevel(size_t level) {
-    boardLevel = level;
+    this->boardLevel = level;
 }
 
 void GaltonBoard::setNumberOfBalls(size_t balls) {
-    numberOfBalls = balls;
+    this->numberOfBalls = balls;
 }
 
-//_________________
-
+//-----------------------------------------------------------------------------------------------
+//  Random distribution
+//-----------------------------------------------------------------------------------------------
 
 size_t GaltonBoard::randDistrib_LR() {
+    // https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution
     random_device              rd;  //Will be used to obtain a seed for the random number engine
     mt19937                    gen(rd()); //Standard mersenne_twister_engine seeded with rd()
     uniform_int_distribution<> distrib(0, 1);
@@ -32,31 +50,35 @@ size_t GaltonBoard::randDistrib_LR() {
     return distrib(gen);
 }
 
-size_t GaltonBoard::rightFallCounter() {
-    // Counts every time the ball falls to the right side
+//-----------------------------------------------------------------------------------------------
+//  Algorithm
+//-----------------------------------------------------------------------------------------------
+
+size_t GaltonBoard::rightFallCounter() const {
+    // Counts every time the ball falls to the right side of the peg
     size_t result = 0;
 
-    // The level is the number of layers of decisions that the ball traverse,
+    // The boardLevel is the number of layers of decisions (right/left) that the ball traverse
     for (size_t i = 0; i < boardLevel; ++i) {
         result += randDistrib_LR(); // The ball either goes left(0) or right(1)
     }
     return result;
 }
 
-void GaltonBoard::createGaussianArray() {
-    // Initialise a vector of size level and filled with 0
-    vector<size_t> gaussianArray(boardLevel);
-
+void GaltonBoard::fillGaussianVector() {
     for (size_t i = 0; i < numberOfBalls; ++i) {
-        // The total number of rights it made is the index of where it lands
-        gaussianArray.at(rightFallCounter()) += 1;    // So we add one ball
+        // The total number of rights the ball made is the index of where it lands
+        gaussVector.at(rightFallCounter()) += 1;    // So we add one ball
     }
-    gaussArray = gaussianArray;
 }
 
+//-----------------------------------------------------------------------------------------------
+//  Action methods
+//-----------------------------------------------------------------------------------------------
+
 void GaltonBoard::displayBoard() {
-    for (auto i = gaussArray.begin(); i != gaussArray.end(); ++i) {
-        for (size_t j = 0; j < *i; ++j) {
+    for (size_t &i: gaussVector) {
+        for (size_t j = 0; j < i; ++j) {
             cout << "*";
         }
         cout << endl;
@@ -64,5 +86,12 @@ void GaltonBoard::displayBoard() {
 }
 
 void GaltonBoard::startSimulation() {
-    createGaussianArray();
+    // The vector has to be empty to start a new simulation
+    gaussVector.clear();
+
+    // Resize the vector to a size of boardLevel + 1 (because the board level is the number of
+    // pegs and at the last row there is 1 extra column (see image of a Galton Board)
+    gaussVector.resize(boardLevel + 1);
+
+    fillGaussianVector();
 }

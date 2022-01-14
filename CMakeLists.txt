@@ -3,4 +3,4 @@ project(lab_08_Galton_Board)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(lab_08_Galton_Board main.cpp GaltonBoard.cpp Galton.cpp)
+add_executable(lab_08_Galton_Board main.cpp GaltonBoard.cpp annex.cpp)
