@@ -9,9 +9,9 @@ Compiler        :   Apple clang version 13.0.0 (clang-1300.0.29.30)
 -------------------------------------------------------------------------------------------------
 */
 
-#include <iostream>
-#include <random>
-#include <algorithm>
+#include <iostream>     // cout, endl
+#include <random>       // random_device, mt19937, gen(), uniform_int_distribution<>, distrib()
+#include <algorithm>    // max_element()
 
 #include "GaltonBoard.h"
 
@@ -44,8 +44,8 @@ void GaltonBoard::setNumberOfBalls(size_t balls) {
 
 size_t GaltonBoard::randDistrib_LR() {
     // https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution
-    random_device              rd;  //Will be used to obtain a seed for the random number engine
-    mt19937                    gen(rd()); //Standard mersenne_twister_engine seeded with rd()
+    random_device              rd;  // Will be used to obtain a seed for the random number engine
+    mt19937                    gen(rd()); // Standard mersenne_twister_engine seeded with rd()
     uniform_int_distribution<> distrib(0, 1);
 
     return distrib(gen);
@@ -78,34 +78,27 @@ void GaltonBoard::fillGaussianVector() {
 //-----------------------------------------------------------------------------------------------
 
 void GaltonBoard::displayBoard() {
-   /*
-    for (size_t &i: gaussVector) {
-        for (size_t j = 0; j < i; ++j) {
-            cout << "*";
+    size_t indexMaxVal = max_element(
+            gaussVector.begin(),
+            gaussVector.end()
+    ) - gaussVector.begin();
+
+    // We go through the gaussian curve "floor by floor"
+    for (size_t maxVal = gaussVector[indexMaxVal]; maxVal > 0; --maxVal) {
+        for (size_t &i: gaussVector) {
+            // If one of the value is equal to the floor value
+            // we write a star '*' and lower it from one
+            // until we reach the value 0, meaning all floors have been
+            // converted to stars
+            if (i == maxVal) {
+                cout << "*";
+                --i;
+            } else {
+                cout << " ";
+            }
         }
         cout << endl;
-    }*/
-   unsigned int IndexMaxVal = 
-                            std::max_element(gaussVector.begin(),
-                                             gaussVector.end())-gaussVector.begin();
-   unsigned int MaxVal= gaussVector[IndexMaxVal];
-   //We go through the gaussian curve "floor by floor"
-   for (MaxVal; MaxVal>0; --MaxVal){
-      for (int i = 0; i < gaussVector.size() ; ++i) {
-         //if one of the value is equal to the floor value
-         //we write a star '*' and lower it from one
-         //until we reach the value 0, meaning all floors have been
-         //converted to stars
-               if (gaussVector[i]== MaxVal){
-                  cout << "*";
-                  --gaussVector[i];
-               }
-               else{
-                  cout << " ";
-               }
-      }
-      cout << endl;
-   }
+    }
 
 }
 

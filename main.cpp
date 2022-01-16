@@ -16,7 +16,7 @@ Compiler        :   Apple clang version 13.0.0 (clang-1300.0.29.30)
 -------------------------------------------------------------------------------------------------
 */
 
-#include <iostream>
+#include <iostream> // cout, endl
 
 #include "annex.h"
 #include "GaltonBoard.h"

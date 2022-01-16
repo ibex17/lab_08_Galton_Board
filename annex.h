@@ -13,7 +13,10 @@ Compiler        :   Apple clang version 13.0.0 (clang-1300.0.29.30)
 #ifndef LAB_08_GALTON_BOARD_ANNEX_H
 #define LAB_08_GALTON_BOARD_ANNEX_H
 
-using vect = std::vector<size_t>;
+#include "vector"   // vector<size_t>
+
+using namespace std;
+using vect = vector<size_t>;
 
 /**
  * Compact function to empty the buffer
@@ -26,7 +29,7 @@ void emptyBuffer();
  * @param v Vector
  * @return Output stream
  */
-std::ostream &operator<<(std::ostream &os, const vect &v);
+ostream &operator<<(ostream &os, const vect &v);
 
 /**
  * Read an input of type int between a minimum and maximum value with control of the stream
@@ -37,10 +40,10 @@ std::ostream &operator<<(std::ostream &os, const vect &v);
  * @return int input
  */
 int readIntBetween(
-        const std::string &message,
+        const string &message,
         int minVal,
         int maxVal,
-        const std::string &errorMessage
+        const string &errorMessage
 );
 
 /**
@@ -58,8 +61,8 @@ char readChar();
  * @return True if char input match the "yes" value
  */
 bool restart(
-        const std::string &question,
-        const std::string &errorMessage,
+        const string &question,
+        const string &errorMessage,
         const char &yes,
         const char &no
         );

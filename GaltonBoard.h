@@ -13,7 +13,10 @@ Compiler        :   Apple clang version 13.0.0 (clang-1300.0.29.30)
 #ifndef LAB_08_GALTON_BOARD_GALTONBOARD_H
 #define LAB_08_GALTON_BOARD_GALTONBOARD_H
 
-#include "vector"
+#include "vector" // vector<size_t>
+
+using namespace std;
+using vect = vector<size_t>;
 
 class GaltonBoard {
 
@@ -51,7 +54,7 @@ public:
 private:
     size_t boardLevel;
     size_t numberOfBalls;
-    std::vector<size_t> gaussVector;
+    vect gaussVector;
 
     /**
      * Compute, thanks to the uniform_int_distribution class, if

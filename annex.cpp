@@ -10,8 +10,7 @@ Compiler        :   Apple clang version 13.0.0 (clang-1300.0.29.30)
 -------------------------------------------------------------------------------------------------
 */
 
-#include <iostream>
-#include <random>
+#include <iostream> // cout, cin
 
 #include "annex.h"
 
