@@ -11,6 +11,7 @@ Compiler        :   Apple clang version 13.0.0 (clang-1300.0.29.30)
 */
 
 #include <iostream> // cout, cin
+#include <limits>   // numeric_limits
 
 #include "annex.h"
 
@@ -82,7 +83,7 @@ bool restart(
     bool repeat  = false;
     bool restart = false;
     do {
-        cout << endl << question << "[" << yes << "|" << no << "] : " << endl;
+        cout << endl << question << "[" << yes << "|" << no << "] : ";
 
         char input = readChar();
         if (input == yes) {

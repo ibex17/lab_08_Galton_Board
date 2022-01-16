@@ -56,20 +56,21 @@ int main() {
         //  Galton simulation
         //---------------------------------------------------------------------------------------
 
-        GaltonBoard galton(
-                readIntBetween(
-                        MSG_INVITE_BOARD_LEVEL,
-                        MIN_VALUE_BOARD_LEVEL,
-                        MAX_VALUE_BOARD_LEVEL,
-                        MSG_BROKEN_STREAM
-                ),
-                readIntBetween(
-                        MSG_INVITE_NBR_BALLS,
-                        MIN_VALUE_BOARD_LEVEL,
-                        MAX_VALUE_NBR_BALLS,
-                        MSG_BROKEN_STREAM
-                )
+        int boardLevel = readIntBetween(
+                MSG_INVITE_BOARD_LEVEL,
+                MIN_VALUE_BOARD_LEVEL,
+                MAX_VALUE_BOARD_LEVEL,
+                MSG_BROKEN_STREAM
         );
+
+        int numberOfBalls = readIntBetween(
+                MSG_INVITE_NBR_BALLS,
+                MIN_VALUE_BOARD_LEVEL,
+                MAX_VALUE_NBR_BALLS,
+                MSG_BROKEN_STREAM
+        );
+
+        GaltonBoard galton(boardLevel, numberOfBalls);
 
         //---------------------------------------------------------------------------------------
         //  Start simulation
