@@ -11,6 +11,7 @@ Compiler        :   Apple clang version 13.0.0 (clang-1300.0.29.30)
 
 #include <iostream>
 #include <random>
+#include <algorithm>
 
 #include "GaltonBoard.h"
 
@@ -77,12 +78,35 @@ void GaltonBoard::fillGaussianVector() {
 //-----------------------------------------------------------------------------------------------
 
 void GaltonBoard::displayBoard() {
+   /*
     for (size_t &i: gaussVector) {
         for (size_t j = 0; j < i; ++j) {
             cout << "*";
         }
         cout << endl;
-    }
+    }*/
+   unsigned int IndexMaxVal = 
+                            std::max_element(gaussVector.begin(),
+                                             gaussVector.end())-gaussVector.begin();
+   unsigned int MaxVal= gaussVector[IndexMaxVal];
+   //We go through the gaussian curve "floor by floor"
+   for (MaxVal; MaxVal>0; --MaxVal){
+      for (int i = 0; i < gaussVector.size() ; ++i) {
+         //if one of the value is equal to the floor value
+         //we write a star '*' and lower it from one
+         //until we reach the value 0, meaning all floors have been
+         //converted to stars
+               if (gaussVector[i]== MaxVal){
+                  cout << "*";
+                  --gaussVector[i];
+               }
+               else{
+                  cout << " ";
+               }
+      }
+      cout << endl;
+   }
+
 }
 
 void GaltonBoard::startSimulation() {
